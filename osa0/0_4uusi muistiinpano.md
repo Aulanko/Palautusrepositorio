@@ -4,6 +4,8 @@ sequenceDiagram
     participant user
     participant browser
     participant server
+
+    user->>browser: Types something to the text input field
     
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
     activate server
