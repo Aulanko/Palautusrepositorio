@@ -6,6 +6,7 @@ sequenceDiagram
     participant server
 
     user->>browser: Types something to the text input field
+    user ->>browser: clicks the "Save" button
     
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
     activate server
