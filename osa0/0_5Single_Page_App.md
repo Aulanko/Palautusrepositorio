@@ -5,8 +5,8 @@ sequenceDiagram
     participant browser
     participant server
 
-    user->>browser: Types something to the text input field
-    user ->>browser: clicks the "Save" button
+    user->>browser: Goes to the single app website
+    
    
     
     browser->>server: POST request the data in JSON format to the server. 
