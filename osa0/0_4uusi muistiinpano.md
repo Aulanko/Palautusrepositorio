@@ -10,10 +10,17 @@ sequenceDiagram
     
     browser->>server: POST request the data in JSON format to the server. 
     activate server
-    server-->>browser: redirects to the /notes page
+   
     note right of server: processes the request, and stores the data
+    server-->>browser: redirects to the /notes page
     deactivate server
     
+
+    browser ->> server GET https://studies.cs.helsinki.fi/exampleapp/
+    
+
+
+
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
     activate server
     server-->>browser: the css file
