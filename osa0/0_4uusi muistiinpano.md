@@ -10,7 +10,7 @@ sequenceDiagram
     
     browser->>server: POST request the data in JSON format to the server. 
     activate server
-    server-->>browser redirects to the /notes page
+    server-->>browser: redirects to the /notes page
     server-->>browser: HTML document
     deactivate server
     
