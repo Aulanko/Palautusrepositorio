@@ -12,7 +12,7 @@ sequenceDiagram
     browser->>server: POST request the data in JSON format to the server. 
     activate server
    
-    note right of server: processes the request, and stores the data
+    note right of server: processes the request, and stores/saves the data
     server-->>browser: redirects to the /notes page
     deactivate server
 
@@ -43,6 +43,6 @@ sequenceDiagram
     server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
     deactivate server    
 
-    Note right of browser: The browser executes the callback function that renders the notes 
+    Note right of browser: The browser executes the callback function that renders the notes saved
 
 
