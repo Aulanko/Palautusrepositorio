@@ -47,3 +47,7 @@ sequenceDiagram
 
     user->>browser: Types something into the input field
     user->>browser: Clicks the "Save" button
+
+ 
+    Note right of browser: The data from the input field is saved to the browser cache and the State of the application is updated
+
