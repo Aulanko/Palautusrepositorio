@@ -9,7 +9,7 @@ sequenceDiagram
     
    
     
-    browser->>server: POST request the data in JSON format to the server. 
+   
    
 
   
