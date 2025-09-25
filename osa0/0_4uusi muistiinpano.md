@@ -16,7 +16,7 @@ sequenceDiagram
     deactivate server
     
 
-    browser ->> server GET https://studies.cs.helsinki.fi/exampleapp/
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/
     
 
 
