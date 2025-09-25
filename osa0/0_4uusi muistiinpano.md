@@ -14,6 +14,7 @@ sequenceDiagram
     note right of server: processes the request, and stores the data
     server-->>browser: redirects to the /notes page
     deactivate server
+
     deactivate browser
     
 
@@ -21,7 +22,7 @@ sequenceDiagram
     activate server
     server-->>browser: HTML file/document
 
-    deactiate server
+    deactivate server
 
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
