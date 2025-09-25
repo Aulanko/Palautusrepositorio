@@ -14,10 +14,13 @@ sequenceDiagram
     note right of server: processes the request, and stores the data
     server-->>browser: redirects to the /notes page
     deactivate server
+    deactivate browser
     
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/
-    
+    activate server
+    server-->>browser: HTML file/document
+
 
 
 
