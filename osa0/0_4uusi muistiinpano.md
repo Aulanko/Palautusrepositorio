@@ -8,7 +8,7 @@ sequenceDiagram
     user->>browser: Types something to the text input field
     user ->>browser: clicks the "Save" button
     
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    browser->>server: POST request the data in JSON format to the server. 
     activate server
     server-->>browser: HTML document
     deactivate server
