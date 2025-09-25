@@ -21,7 +21,7 @@ sequenceDiagram
     activate server
     server-->>browser: HTML file/document
 
-
+    deactiate server
 
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
