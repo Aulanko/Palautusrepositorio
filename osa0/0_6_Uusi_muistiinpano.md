@@ -8,8 +8,7 @@ sequenceDiagram
 
     user->>browser: Goes to the single app website
 
-    user->>browser: Types something into the input field
-    user->>browser: Clicks the "Save" button
+   
 
     
    
@@ -45,3 +44,6 @@ sequenceDiagram
     deactivate server    
 
     Note right of browser: The browser executes the callback function that renders the notes saved
+
+    user->>browser: Types something into the input field
+    user->>browser: Clicks the "Save" button
