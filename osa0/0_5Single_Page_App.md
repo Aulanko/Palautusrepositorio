@@ -10,11 +10,7 @@ sequenceDiagram
    
     
     browser->>server: POST request the data in JSON format to the server. 
-    activate server
    
-    note right of server: processes the request, and stores/saves the data
-    server-->>browser: redirects to the /notes page
-    deactivate server
 
   
     
