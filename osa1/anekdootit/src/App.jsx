@@ -13,6 +13,13 @@ function App() {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when dianosing patients.',
     'The only way to go fast, is to go well.'
   ]
+  const [anecdote_map, setAnecdote_map] = useState(
+     anecdotes.map(anecdote=>({
+    text:anecdote,
+    votes:0
+  })) 
+
+)
   
   const [selected, setSelected] = useState(0)
   
@@ -22,14 +29,17 @@ function App() {
     setSelected(randomNume)
   }
 
-  const handleVote = () =>{
-
+  const handleVote = (e) =>{
+    const newAnecdote = [...anecdote_map]
+    newAnecdote[selected].votes += 1
+    setAnecdote_map(newAnecdote)
   }
 
   return (
     <>
       <div>
          {anecdotes[selected]}
+         <h4>Has {anecdote_map[selected].votes} votes</h4>
       </div>
       <button onClick={handleVote}>Vote</button>
       <button onClick={handleClick}>Next anecdote</button>
