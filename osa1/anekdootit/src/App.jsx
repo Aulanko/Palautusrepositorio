@@ -35,11 +35,18 @@ function App() {
     setAnecdote_map(newAnecdote)
   }
 
+  const maxAnecdote = anecdote_map.reduce((max, current)=>
+    current.votes>max.votes ?current:max
+  )
+
   return (
     <>
       <div>
          {anecdotes[selected]}
          <h4>Has {anecdote_map[selected].votes} votes</h4>
+         <h2>Anecdote with the most votes:</h2>
+         <h4>{maxAnecdote.text}</h4>
+         <h4>has {maxAnecdote.votes} votes</h4>
       </div>
       <button onClick={handleVote}>Vote</button>
       <button onClick={handleClick}>Next anecdote</button>
