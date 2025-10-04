@@ -3,6 +3,42 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+
+
+const Search = ({search,handleSearch}) =>{
+  return(
+    <h4>Search bar: <input value={search} onChange={handleSearch}></input></h4>
+  )
+}
+
+const Personform = ({handleSubmit, newName, handleNameChange, newNumber, handleNumberChange}) =>{
+  return(
+    <form onSubmit={handleSubmit}>
+
+        <div>
+          name: <input value={newName} onChange={handleNameChange}/>
+        </div>
+        <div>
+          Number: <input value={newNumber} onChange={handleNumberChange}/>
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+  )
+}
+
+const FilteredPersons = ({filteredPersons}) =>{
+  return(
+    <>
+    {filteredPersons.map((person,index)=>(
+        <h3 key={index}>{person.name} {person.number}</h3>
+      ))}
+
+    </>
+  )
+}
+
 function App() {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas' }
@@ -41,26 +77,22 @@ function App() {
   return (
     <>
       <h1>Phonebook</h1>
-      <h4>Search bar: <input value={search} onChange={handleSearch}></input></h4>
+      <Search search={search} handleSearch={handleSearch}/>
+      
 
       <h3>Add new</h3>
-      <form onSubmit={handleSubmit}>
-
-        <div>
-          name: <input value={newName} onChange={handleNameChange}/>
-        </div>
-        <div>
-          Number: <input value={newNumber} onChange={handleNumberChange}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Personform
+      handleSubmit={handleSubmit}
+      newName={newName}
+      newNumber={newNumber}
+      handleNameChange={handleNameChange}
+      handleNumberChange={handleNumberChange}
+      />
       <h2>Numbers</h2>
 
-      {filteredPersons.map((person,index)=>(
-        <h3 key={index}>{person.name} {person.number}</h3>
-      ))}
+      <FilteredPersons filteredPersons={filteredPersons}/>
+
+      
     </>
   )
 }
