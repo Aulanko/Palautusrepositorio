@@ -66,3 +66,22 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+.error{
+  border-color: red;
+  box-shadow: #1a1a1a;
+  background-color: red;
+}
+
+.success{
+  border-color: greenyellow;
+  box-shadow: #1a1a1a;
+  background-color: aquamarine;
+}
+
+.updated{
+  border-color: purple;
+  box-shadow: #1a1a1a;
+  background-color: orange;
+}
