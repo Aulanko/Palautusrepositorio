@@ -74,8 +74,16 @@ function App() {
 
   const handleSubmit = (e) =>{
     e.preventDefault()
-    if(persons.some(person => person.name==newName)){
-      alert(`${newName} is aldready in the phonebook`)
+    const existingPerson = persons.find(person => person.name==newName)
+    if(existingPerson){
+      palvelin.update({...existingPerson, number:newNumber}).then(response=>{
+      setPersons(persons.map(p=>
+        p.id==existingPerson.id?response.data:p
+      ))
+
+    })
+
+      alert(`${newName}'s number updated`)
       return
     }
 
