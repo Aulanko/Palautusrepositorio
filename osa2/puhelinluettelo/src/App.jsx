@@ -28,11 +28,14 @@ const Personform = ({handleSubmit, newName, handleNameChange, newNumber, handleN
   )
 }
 
-const FilteredPersons = ({filteredPersons}) =>{
+const FilteredPersons = ({filteredPersons, handleRemove}) =>{
   return(
     <>
     {filteredPersons.map((person,index)=>(
-        <h3 key={index}>{person.name} {person.number}</h3>
+      <div key={index}>
+        <h3 key={index}>{person.name} {person.number}<button onClick={()=>handleRemove(person)}>delete</button></h3>
+        
+      </div>
       ))}
 
     </>
@@ -78,13 +81,24 @@ function App() {
 
 
 
-    palvelin.create({name: newName, number:newNumber, id:(persons.length+1).toString()}).then(response=>{
+    palvelin.create({name: newName, number:newNumber}).then(response=>{
       setPersons([...persons,response.data])
 
     })
 
     //setPersons([...persons, {name:newName, number:newNumber}])
    
+  }
+
+  const handleRemove = (person) =>{
+    if(window.confirm(`Delete ${person.name}`)){
+       palvelin.remove(person).then(()=>{
+        setPersons(persons.filter(p=>p.name!==person.name))
+       })
+    }
+   
+   
+
   }
 
   return (
@@ -103,7 +117,7 @@ function App() {
       />
       <h2>Numbers</h2>
 
-      <FilteredPersons filteredPersons={filteredPersons}/>
+      <FilteredPersons filteredPersons={filteredPersons} handleRemove={handleRemove}/>
 
       
     </>
