@@ -1,7 +1,6 @@
 import { useState,useEffect } from 'react'
 import axios from 'axios'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import palvelin from './services/puhuPalvelinta'
 import './App.css'
 
 
@@ -50,13 +49,9 @@ function App() {
   const [search, setSearch] = useState('')
 
  useEffect(()=>{
-  axios
-    .get('http://localhost:3001/persons')
-    .then(response=>{
+  palvelin.getAll().then(response=>{
       setPersons(response.data)
-    }
-      
-    )
+    })
  },[])
   
   const handleNameChange = (e) =>{
@@ -81,7 +76,14 @@ function App() {
       return
     }
 
-    setPersons([...persons, {name:newName, number:newNumber}])
+
+
+    palvelin.create({name: newName, number:newNumber, id:(persons.length+1).toString()}).then(response=>{
+      setPersons([...persons,response.data])
+
+    })
+
+    //setPersons([...persons, {name:newName, number:newNumber}])
    
   }
 
