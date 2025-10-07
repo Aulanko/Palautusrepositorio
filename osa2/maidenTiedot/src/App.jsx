@@ -8,7 +8,16 @@ const Maantiedot = ({country}) =>{
   return(
     <>
       <h2>{country.name.common}</h2>
-     
+      <h3>Capital: {country.capital}</h3>
+      <p>area: {country.area}</p>
+      <p>Population:</p>
+      <h3>languages:</h3>
+        <ul>
+            {Object.values(country.languages).map(language =>(
+                <li key={language}>{language}</li>
+            ))}
+        </ul>
+      <img src={country.flags.png} alt={`Flag of ${country.name.common}`} width="150" />
 
     </>
   )
@@ -44,9 +53,17 @@ function App() {
       </div>
       
       {filteredMaat.length>10? <p>too many matches, spesify more</p>:
+      filteredMaat.length===1?
+      <Maantiedot country={filteredMaat[0]} />:
       filteredMaat.map(country =>(
-        <Maantiedot key={maat.cca3} country={country} />
-      ))}
+        
+        <h2 key={country.cca3}>{country.name.common}</h2>
+      ))
+
+     
+      
+      
+      }
       
     </>
   )
