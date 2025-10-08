@@ -3,6 +3,34 @@ import axios from 'axios'
 
 import './App.css'
 
+const WeatherDetails = ({capital, cordinates}) =>{
+
+  const [weather, setWeather] = useState(null)
+  const api_key = import.meta.env.VITE_SOME_KEY
+
+  useEffect(()=>{
+    const [latitude, longitude] = cordinates
+    axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${api_key}`)
+    .then((response)=>{setWeather(response.data)}).catch((error)=>console.log("nyt tuli virhe säädatan hakemisessa", error))
+
+  },[cordinates,api_key])
+  if(!weather){
+    return(
+      <h2>Loading weather..</h2>
+    )
+  }
+  return(
+    <div>
+
+      <h4>Weather in {capital}</h4>
+      <p>Temperature: </p>
+
+
+
+    </div>
+  )
+}
+
 const Maantiedot = ({country}) =>{
 
   return(
@@ -18,6 +46,7 @@ const Maantiedot = ({country}) =>{
             ))}
         </ul>
       <img src={country.flags.png} alt={`Flag of ${country.name.common}`} width="150" />
+      <WeatherDetails capital={country.capital} cordinates ={country.capitalInfo.latlng}/>
 
     </>
   )
