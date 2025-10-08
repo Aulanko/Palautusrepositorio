@@ -40,6 +40,13 @@ function App() {
     setInputa(e.target.value)
   }
 
+  const handleShow = (country) =>{
+    setInputa(country.name.common)
+   
+    
+    
+  }
+
   const filteredMaat = maat.filter(country=>
     country.name.common.toLowerCase().includes(inputa.toLowerCase())
   )
@@ -57,7 +64,7 @@ function App() {
       <Maantiedot country={filteredMaat[0]} />:
       filteredMaat.map(country =>(
         
-        <h2 key={country.cca3}>{country.name.common}</h2>
+        <h2 key={country.cca3}>{country.name.common} <button onClick={()=>handleShow(country)}>show</button></h2>
       ))
 
      
