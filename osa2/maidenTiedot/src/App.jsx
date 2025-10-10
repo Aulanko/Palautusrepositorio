@@ -22,8 +22,15 @@ const WeatherDetails = ({capital, cordinates}) =>{
   return(
     <div>
 
+      <img
+        src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+        alt={weather.weather[0].description}
+      />
+
       <h4>Weather in {capital}</h4>
-      <p>Temperature: </p>
+      <h5>Temperature is: {weather.main.temp} celsius</h5>
+      <p>Wind speed is: {weather.wind.speed} meters per second</p>
+
 
 
 
