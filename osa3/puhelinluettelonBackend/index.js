@@ -3,7 +3,7 @@
 const express = require('express')
 const app = express()
 
-const persons = [
+/*const persons = [
     {
       name: "Arto Hellas",
       number: "03021-321-321-21",
@@ -25,6 +25,12 @@ const persons = [
       id: "4"
     }
 ]
+*/
+
+const getDataFromFile = async () => {
+    const data = await fs.readFile('db.json', 'utf8');
+    return JSON.parse(data);
+};
 
 app.get('/', (request,response)=>{
     response.send('<h1>Hello World!</h1>')
@@ -54,6 +60,14 @@ app.get('/api/persons/:id',(request,response)=>{
     else{
         response.status(404).end()
     }
+})
+
+app.delete('/api/persons/:id', async (request, response)=>{
+    let persons = await getDataFromFile()
+    const id = request.params.id
+    
+    persons = persons.filter(hän=>hän.id!==id)
+    response.status(204).end()
 })
 
 const PORT = 3001
