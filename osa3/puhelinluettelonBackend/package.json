@@ -1,0 +1,25 @@
+{
+  "name": "puhelinluettelonbackend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aulanko/Palautusrepositorio.git"
+  },
+  "author": "Leo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aulanko/Palautusrepositorio/issues"
+  },
+  "homepage": "https://github.com/Aulanko/Palautusrepositorio#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
