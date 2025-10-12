@@ -3,7 +3,7 @@
 const express = require('express')
 const fs = require('fs').promises
 const app = express()
-
+app.use(express.json())
 
 
 /*const persons = [
@@ -86,10 +86,32 @@ app.delete('/api/persons/:id', async (request, response)=>{
 
     response.status(200).json(
         {message:`person with id of:${id} deleted succesfully `}
-        
+
     )
     }catch(error){
         console.log("Error fetching the data from a file",error)
+    }
+})
+
+app.post('/api/persons', async(request, response)=>{
+    try{
+
+        let persons = await getDataFromFilu()
+        const {name, number} = request.body
+
+        if(!name||!number){
+            return response.status(400).json({
+                message:`There needs to be both name and number`
+            })
+        }
+        const iD = Math.floor(Math.random()*1000000).toString()
+        persons = [...persons, {id:iD,name: name,number: number}]
+
+        await saveDataToFilu(persons)
+        response.status(201).json({id:iD,name:name, number: number})
+        
+    }catch(error){
+        console.log(`Error adding a person to the database. ${error}`)
     }
 })
 
