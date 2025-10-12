@@ -6,31 +6,26 @@ const app = express()
 app.use(express.json())
 const morgan = require('morgan')
 
-app.use(morgan('tiny'))
-
-/*const persons = [
-    {
-      name: "Arto Hellas",
-      number: "03021-321-321-21",
-      id: "1"
-    },
-    {
-      name: "Ada Lovelace",
-      number: "39-44-5323523",
-      id: "2"
-    },
-    {
-      name: "Dan Abramov",
-      number: "12-43-234345",
-      id: "3"
-    },
-    {
-      name: "Mary Poppendiecka",
-      number: "39-23-6423122",
-      id: "4"
+app.use((req, res, next) => {
+    const alkuperäinenJson = res.json
+    res.json = (data) => {
+        res.locals.responseBody = data
+        alkuperäinenJson.call(res, data)  
     }
-]
-*/
+    next()
+})
+
+morgan.token('response-body', (req,res)=>{
+    return res.locals.responseBody?JSON.stringify(res.locals.responseBody):"ei mitään"
+})
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :response-body'))
+
+
+
+
+
+
+
 
 const getDataFromFilu = async() => {
     const data = await fs.readFile('db.json', 'utf8');
