@@ -1,7 +1,10 @@
 
 
 const express = require('express')
+const fs = require('fs').promises
 const app = express()
+
+
 
 /*const persons = [
     {
@@ -27,20 +30,27 @@ const app = express()
 ]
 */
 
-const getDataFromFile = async () => {
+const getDataFromFilu = async() => {
     const data = await fs.readFile('db.json', 'utf8');
     return JSON.parse(data);
 };
+
+const saveDataToFilu = async(data) => {
+    await fs.writeFile('db.json',JSON.stringify(data),null, 2);
+};
+
 
 app.get('/', (request,response)=>{
     response.send('<h1>Hello World!</h1>')
 })
 
-app.get('/api/persons', (request,response)=>{
+app.get('/api/persons', async(request,response)=>{
+    const persons = await getDataFromFilu()
     response.json(persons)
 })
 
-app.get('/info', (request, response)=>{
+app.get('/info', async(request, response)=>{
+    const persons = await getDataFromFilu()
     const currenthetki = new Date()
     response.send(`<h2>Phonebook has info of ${persons.length} persons</h2>
         <p>${currenthetki}</p>`
@@ -51,7 +61,8 @@ app.get('/info', (request, response)=>{
     
 })
 
-app.get('/api/persons/:id',(request,response)=>{
+app.get('/api/persons/:id',async(request,response)=>{
+    const persons = await getDataFromFilu()
     const id = request.params.id
     const hän = persons.find(hän=>hän.id==id)
     if(hän){
@@ -63,11 +74,23 @@ app.get('/api/persons/:id',(request,response)=>{
 })
 
 app.delete('/api/persons/:id', async (request, response)=>{
-    let persons = await getDataFromFile()
+
+    try{
+
+    
+    let persons = await getDataFromFilu()
     const id = request.params.id
     
     persons = persons.filter(hän=>hän.id!==id)
-    response.status(204).end()
+    await saveDataToFilu(persons)
+
+    response.status(200).json(
+        {message:`person with id of:${id} deleted succesfully `}
+        
+    )
+    }catch(error){
+        console.log("Error fetching the data from a file",error)
+    }
 })
 
 const PORT = 3001
