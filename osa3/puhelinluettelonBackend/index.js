@@ -104,6 +104,12 @@ app.post('/api/persons', async(request, response)=>{
                 message:`There needs to be both name and number`
             })
         }
+        inThere = persons.some((p)=>p.name==name)
+        if(inThere){
+            return response.status(400).json({
+                message:`The name was aldready found in the list`
+            })
+        }
         const iD = Math.floor(Math.random()*1000000).toString()
         persons = [...persons, {id:iD,name: name,number: number}]
 
