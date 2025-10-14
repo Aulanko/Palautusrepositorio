@@ -154,7 +154,7 @@ const errorHandler = (error, request, response, next) => {
   next(error)
 }
 
-// tämä tulee kaikkien muiden middlewarejen ja routejen rekisteröinnin jälkeen!
+// tämä tulee kaikkien muiden middlewarejen ja routejen rekisteröinnin jälkeen!!
 app.use(errorHandler)
 
 const PORT = 3001
