@@ -129,6 +129,20 @@ app.post('/api/persons', async(request, response, next)=>{
     }
 })
 
+app.put('/api/persons/:id', async(request,response, next)=>{
+    try{
+        const {name,number} = request.body
+        const updatedPersona = await Person.findByIdAndUpdate(request.params.id, {name:name,number:number},{new:true, runValidators:true})
+        if(updatedPersona){
+            response.json(updatedPersona)
+        }
+        else{
+            response.status(404).json({error:"henkilöä ei löytynyt"})
+        }
+    }catch(error){
+        next(error)
+    }
+})
 
 const errorHandler = (error, request, response, next) => {
   console.error(error.message)
