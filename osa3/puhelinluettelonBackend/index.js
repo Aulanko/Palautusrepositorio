@@ -73,19 +73,11 @@ app.delete('/api/persons/:id', async (request, response)=>{
 
     try{
 
-    
-    let persons = await Person.find({})
-    const id = request.params.id
-    
-    persons = persons.filter(hän=>hän.id!==id)
-    await saveDataToFilu(persons)
-
-    response.status(200).json(
-        {message:`person with id of:${id} deleted succesfully `}
-
-    )
+    Person.findByIdAndDelete(request.params.id).then(result=>{
+        response.status(204).end()
+    })
     }catch(error){
-        console.log("Error fetching the data from a file",error)
+        console.log("Error deleting the person",error)
     }
 })
 
