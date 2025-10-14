@@ -8,6 +8,8 @@ app.use(express.json())
 app.use(cors())
 const morgan = require('morgan')
 
+const Person = require('./mongoose')
+
 app.use((req, res, next) => {
     const alkuperäinenJson = res.json
     res.json = (data) => {
@@ -28,11 +30,11 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :r
 
 
 
-
+/*
 const getDataFromFilu = async() => {
     const data = await fs.readFile('db.json', 'utf8');
     return JSON.parse(data);
-};
+}; */
 
 const saveDataToFilu = async(data) => {
     await fs.writeFile('db.json',JSON.stringify(data),null, 2);
@@ -44,7 +46,7 @@ app.get('/', (request,response)=>{
 })
 
 app.get('/api/persons', async(request,response)=>{
-    const persons = await getDataFromFilu()
+    const persons = await Person.find({})
     response.json(persons)
 })
 
