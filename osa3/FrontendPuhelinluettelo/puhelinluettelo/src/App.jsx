@@ -68,9 +68,10 @@ function App() {
       setPersons([...persons,response.data])
 
     }).catch(error => {
-    setMessage(`Error: Could not add ${newName}`)
+    setMessage(`Error: Could not add ${newName} due to ${error.response.data.error}`)
     setMessageType('error')
-    console.log('Yhtäaikaista muutosta sovelluksessa tai jokin meni vikaan', error)
+    console.log(error.response.data)
+    
   })
     setMessage(
           `${newName}'s number added`
@@ -78,7 +79,7 @@ function App() {
     setMessageType('success')
         setTimeout(() => {
           setMessage(null)
-        }, 2000)
+        }, 7000)
 
    
   }
