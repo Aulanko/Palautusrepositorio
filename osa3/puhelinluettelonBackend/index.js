@@ -30,11 +30,6 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :r
 
 
 
-/*
-const getDataFromFilu = async() => {
-    const data = await fs.readFile('db.json', 'utf8');
-    return JSON.parse(data);
-}; */
 
 const saveDataToFilu = async(data) => {
     await fs.writeFile('db.json',JSON.stringify(data),null, 2);
@@ -51,7 +46,7 @@ app.get('/api/persons', async(request,response)=>{
 })
 
 app.get('/info', async(request, response)=>{
-    const persons = await getDataFromFilu()
+    const persons = await Person.find({})
     const currenthetki = new Date()
     response.send(`<h2>Phonebook has info of ${persons.length} persons</h2>
         <p>${currenthetki}</p>`
@@ -63,7 +58,7 @@ app.get('/info', async(request, response)=>{
 })
 
 app.get('/api/persons/:id',async(request,response)=>{
-    const persons = await getDataFromFilu()
+    const persons = await Person.find({})
     const id = request.params.id
     const hän = persons.find(hän=>hän.id==id)
     if(hän){
@@ -79,7 +74,7 @@ app.delete('/api/persons/:id', async (request, response)=>{
     try{
 
     
-    let persons = await getDataFromFilu()
+    let persons = await Person.find({})
     const id = request.params.id
     
     persons = persons.filter(hän=>hän.id!==id)
@@ -97,7 +92,7 @@ app.delete('/api/persons/:id', async (request, response)=>{
 app.post('/api/persons', async(request, response)=>{
     try{
 
-        let persons = await getDataFromFilu()
+        let persons = await Person.find({})
         const {name, number} = request.body
 
         if(!name||!number){
@@ -112,10 +107,17 @@ app.post('/api/persons', async(request, response)=>{
             })
         }
         const iD = Math.floor(Math.random()*1000000).toString()
-        persons = [...persons, {id:iD,name: name,number: number}]
+        
 
-        await saveDataToFilu(persons)
-        response.status(201).json({id:iD,name:name, number: number})
+        const person = new Person({
+            name:name,
+            id:iD,
+            number: number
+        })
+
+        const savedPerson = await person.save()
+        
+        response.status(201).json(savedPerson)
         
     }catch(error){
         console.log(`Error adding a person to the database. ${error}`)

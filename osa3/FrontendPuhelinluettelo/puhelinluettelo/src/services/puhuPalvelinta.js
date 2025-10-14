@@ -1,5 +1,10 @@
 import axios from "axios"
-const baseUrl = 'https://palautusrepositorio-fddg.onrender.com/api/persons'
+
+
+const baseUrl = import.meta.env.VITE_NODE_ENV === 'development' 
+  ? 'http://localhost:3001/api/persons'
+  : 'https://palautusrepositorio-fddg.onrender.com/api/persons'
+  
 
 const getAll= ()=>{
     return axios
