@@ -31,57 +31,69 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :r
 
 
 
-const saveDataToFilu = async(data) => {
-    await fs.writeFile('db.json',JSON.stringify(data),null, 2);
-};
 
 
 app.get('/', (request,response)=>{
     response.send('<h1>Hello World!</h1>')
 })
 
-app.get('/api/persons', async(request,response)=>{
+app.get('/api/persons', async(request,response, next)=>{
+    try{
     const persons = await Person.find({})
     response.json(persons)
+    }catch(error){
+        next(error)
+    }
 })
 
-app.get('/info', async(request, response)=>{
+app.get('/info', async(request, response, next)=>{
+    try{
     const persons = await Person.find({})
     const currenthetki = new Date()
     response.send(`<h2>Phonebook has info of ${persons.length} persons</h2>
         <p>${currenthetki}</p>`
         
     )
-
+    }
+    catch(error){
+        next(error)
+    }
    
     
 })
 
-app.get('/api/persons/:id',async(request,response)=>{
-    const persons = await Person.find({})
-    const id = request.params.id
-    const hän = persons.find(hän=>hän.id==id)
+app.get('/api/persons/:id',async(request,response, next)=>{
+    try{
+    
+    const hän = await Person.findById(request.params.id)
     if(hän){
         response.json(hän)
     }
     else{
         response.status(404).end()
     }
-})
-
-app.delete('/api/persons/:id', async (request, response)=>{
-
-    try{
-
-    Person.findByIdAndDelete(request.params.id).then(result=>{
-        response.status(204).end()
-    })
     }catch(error){
-        console.log("Error deleting the person",error)
+        next(error)
     }
 })
 
-app.post('/api/persons', async(request, response)=>{
+app.delete('/api/persons/:id', async (request, response, next)=>{
+
+    try{
+
+    vast = Person.findByIdAndDelete(request.params.id)
+    if(vast){
+        response.status(204).end()
+    }else{
+        response.status(404).json({error: "henkilöä ei löytynyt"})
+    }
+    }catch(error){
+        console.log("Error deleting the person",error)
+        next(error)
+    }
+})
+
+app.post('/api/persons', async(request, response, next)=>{
     try{
 
         let persons = await Person.find({})
@@ -113,8 +125,23 @@ app.post('/api/persons', async(request, response)=>{
         
     }catch(error){
         console.log(`Error adding a person to the database. ${error}`)
+        next(error)
     }
 })
+
+
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  }
+
+  next(error)
+}
+
+// tämä tulee kaikkien muiden middlewarejen ja routejen rekisteröinnin jälkeen!
+app.use(errorHandler)
 
 const PORT = 3001
 app.listen(PORT, ()=>{
