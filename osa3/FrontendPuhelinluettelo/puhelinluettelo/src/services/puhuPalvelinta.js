@@ -1,9 +1,9 @@
 import axios from "axios"
 
 
-const baseUrl = import.meta.env.VITE_NODE_ENV === 'development' 
-  ? 'http://localhost:3001/api/persons'
-  : 'https://backi-puhelin-applikaatio-leo.onrender.com/api/persons'
+const baseUrl = import.meta.env.VITE_NODE_ENV !== 'development' 
+  ? 'https://backi-puhelin-applikaatio-leo.onrender.com/api/persons':'http://localhost:3001/api/persons'
+  
   
 
 const getAll= ()=>{
