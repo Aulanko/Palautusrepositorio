@@ -10,6 +10,10 @@ const morgan = require('morgan')
 
 const Person = require('./mongoose')
 
+const path = require('path')
+app.use(express.static('dist'))
+
+
 app.use((req, res, next) => {
     const alkuperäinenJson = res.json
     res.json = (data) => {
