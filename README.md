@@ -10,3 +10,4 @@ t.3.14 varten on tehty .env tiedosto kyseisen folderin juureen esim(puhelinluett
 ja laitettu sinne VITE_NODE_ENV=development, mikäli halutaa, että pyynnöt menevät ovat MongoDB atlas sivun tietokantaan. 
 
 
+
