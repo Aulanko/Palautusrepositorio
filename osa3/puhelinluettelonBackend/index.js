@@ -82,10 +82,11 @@ app.get('/api/persons/:id',async(request,response, next)=>{
 })
 
 app.delete('/api/persons/:id', async (request, response, next)=>{
-
+    console.log("delete request from backend called")
     try{
+    console.log(request.params.id)
 
-    vast = Person.findByIdAndDelete(request.params.id)
+    vast = await Person.findByIdAndDelete(request.params.id)
     if(vast){
         response.status(204).end()
     }else{

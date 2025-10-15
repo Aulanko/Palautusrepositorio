@@ -19,13 +19,22 @@ function App() {
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState('')
 
- useEffect(() =>{
-  palvelin.getAll().then(response =>{
-    setPersons(response.data)
-  }).catch(error =>{
-    console.log('Jokin meni vikaan, kun yritettiin päivittää sovellusta. Kenties samanaikaista muutosta', error)
-  })
-}, [])
+  useEffect(() => {
+    const fetchPersons = async () => {
+      try {
+        const response = await palvelin.getAll()
+        setPersons(response.data)
+      } catch (error) {
+        console.log('Jokin meni vikaan, kun yritettiin päivittää sovellusta. Kenties samanaikaista muutosta', error)
+        
+        setTimeout(() => {
+          fetchPersons()
+        }, 3000)
+      }
+    }
+    
+    fetchPersons()
+  }, [])
  
   
   const handleNameChange = (e) =>{
@@ -87,9 +96,12 @@ function App() {
   const handleRemove = (person) =>{
     if(window.confirm(`Delete ${person.name}`)){
        palvelin.remove(person).then(()=>{
-        setPersons(persons.filter(p=>p.name!==person.name))
+        setPersons(persons.filter(p=>p.id!==person.id))
+        if(newName==person.name){
+          setNewName('')
+        }
         setMessage(
-          `${newName}'s number removed`
+          `${person.name}'s number removed`
         )
         setMessageType('success')
               setTimeout(() => {
@@ -111,7 +123,7 @@ function App() {
 
   return (
     <>
-      <h1>Phonebook</h1>
+      <h1>Phonebooka</h1>
       <Notification message={message} messageType={messageType}/>
       <Search search={search} handleSearch={handleSearch}/>
       

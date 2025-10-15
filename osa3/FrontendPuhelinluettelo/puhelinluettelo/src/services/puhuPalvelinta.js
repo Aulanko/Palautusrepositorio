@@ -22,6 +22,7 @@ const update = (person) =>{
 }
 
 const remove = (person) =>{
+    console.log("remove request called")
     return axios.delete(`${baseUrl}/${person.id}`)
 }
 
