@@ -42,6 +42,10 @@ app.get('/', (request,response)=>{
 })
 */
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
 app.get('/api/persons', async(request,response, next)=>{
     try{
     const persons = await Person.find({})
@@ -164,6 +168,9 @@ const errorHandler = (error, request, response, next) => {
 
 // tämä tulee kaikkien muiden middlewarejen ja routejen rekisteröinnin jälkeen!!
 app.use(errorHandler)
+
+
+
 
 const PORT = 3001
 app.listen(PORT, ()=>{
