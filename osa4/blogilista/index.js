@@ -1,22 +1,15 @@
 
 const express = require('express')
-const mongoose = require('mongoose')
-require('dotenv').config()
+
+
+const Blog = require('./models/blogs')
 
 const app = express()
 
-const blogSchema = mongoose.Schema({
-  title: String,
-  author: String,
-  url: String,
-  likes: Number,
-})
 
-const Blog = mongoose.model('Blog', blogSchema)
 
 //const mongoUrl = 'mongodb://localhost/bloglist'
-const mongoUrl = process.env.MONGODB_URI
-mongoose.connect(mongoUrl)
+
 
 app.use(express.json())
 
