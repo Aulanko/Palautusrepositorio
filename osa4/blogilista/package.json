@@ -15,7 +15,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "test",
+    "test": "node --test",
     "dev": "node --watch index.js"
   },
   "dependencies": {
