@@ -76,7 +76,7 @@ describe('total_likes', () =>{
 
   test('all likes from the test blog lists combined equal, to one calculated', ()=>{
     const vast = listHelper.totalLikes(blogs)
-    console.log(vast)
+    
     assert.strictEqual(vast,36)
   })
 
