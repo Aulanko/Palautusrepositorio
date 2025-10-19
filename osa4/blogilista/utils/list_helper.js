@@ -77,6 +77,26 @@ const favoriteBlog = (blogs)=>{
   
 }
 
+const mostBlogs = (blogs)=>{
+  kirjasto = {}
+  for(i of blogs){
+    kirjasto[i.author] = (kirjasto[i.author]||0)+1
+
+  }
+ 
+ 
+  const suosituin_author_tykkäykset =Math.max.apply(null, Object.values(kirjasto))
+  const author_itse = Object.entries(kirjasto).find(([henkilö, arvo])=>arvo === suosituin_author_tykkäykset)
+
+  const vast = {
+    name: author_itse[0],
+    blogs: author_itse[1]
+
+  }
+ 
+  return vast
+}
+
 module.exports = {
   dummy,
   totalLikes,
@@ -84,3 +104,5 @@ module.exports = {
 }
 
 //console.log(favoriteBlog(empty))
+
+console.log(mostBlogs(blogs))
