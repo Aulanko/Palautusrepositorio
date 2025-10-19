@@ -78,6 +78,9 @@ const favoriteBlog = (blogs)=>{
 }
 
 const mostBlogs = (blogs)=>{
+  if(blogs.length==0){
+    return undefined;
+  }
   kirjasto = {}
   for(i of blogs){
     kirjasto[i.author] = (kirjasto[i.author]||0)+1
@@ -100,9 +103,11 @@ const mostBlogs = (blogs)=>{
 module.exports = {
   dummy,
   totalLikes,
-  favoriteBlog
+  favoriteBlog,
+  mostBlogs
 }
 
 //console.log(favoriteBlog(empty))
 
 console.log(mostBlogs(blogs))
+console.log(mostBlogs([]))
