@@ -116,16 +116,34 @@ describe('Getting the maximum likes object', () =>{
 describe('Most blogs tests:', () =>{
   test('Returns the most blogs from a single object list', ()=>{
     const vast = listHelper.mostBlogs(blogi)
-    assert.deepStrictEqual(vast, {name:"Michael Chan", blogs:1})
+    assert.deepStrictEqual(vast, {author:"Michael Chan", blogs:1})
   })
 
   test('Returns correctly the author and its blogs from a bigger list of objects', ()=>{
     const vast = listHelper.mostBlogs(blogs)
-    assert.deepStrictEqual(vast, { name: 'Robert C. Martin', blogs: 3 })
+    assert.deepStrictEqual(vast, { author: 'Robert C. Martin', blogs: 3 })
   })
 
   test('return undefined with an empty list', ()=>{
     const vast = listHelper.mostBlogs([])
+    assert.deepStrictEqual(vast, undefined)
+  })
+
+})
+
+describe('Most total likes tests', () =>{
+  test('Can get the total most likes out of a single object list:', ()=>{
+    const vast = listHelper.mostLikes(blogi)
+    assert.deepStrictEqual(vast, {author: "Michael Chan", likes:7})
+  })
+
+  test('Can get the most total likes popular object out of a list of objects', () =>{
+    const vast = listHelper.mostLikes(blogs)
+    assert.deepStrictEqual(vast, { author: 'Edsger W. Dijkstra', likes: 17 })
+  })
+
+    test('return undefined with an empty list', ()=>{
+    const vast = listHelper.mostLikes([])
     assert.deepStrictEqual(vast, undefined)
   })
 

@@ -92,7 +92,7 @@ const mostBlogs = (blogs)=>{
   const author_itse = Object.entries(kirjasto).find(([henkilö, arvo])=>arvo === suosituin_author_tykkäykset)
 
   const vast = {
-    name: author_itse[0],
+    author: author_itse[0],
     blogs: author_itse[1]
 
   }
@@ -100,14 +100,43 @@ const mostBlogs = (blogs)=>{
   return vast
 }
 
+
+const mostLikes = (blogs)=>{
+  if(blogs.length==0){
+    return undefined;
+  }
+  kirjasto = {}
+  for(i of blogs){
+    if(!(i.author in kirjasto)){
+       kirjasto[i.author] = i.likes
+       continue
+    }
+    kirjasto[i.author] += i.likes
+   
+  }
+
+  const suosituin_author_tykkäykset =Math.max.apply(null, Object.values(kirjasto))
+  const author_itse = Object.entries(kirjasto).find(([henkilö, arvo])=> arvo===suosituin_author_tykkäykset)
+
+  const vast = {
+    author: author_itse[0],
+    likes: author_itse[1]
+  }
+  return vast
+}
+
+
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 }
 
 //console.log(favoriteBlog(empty))
 
-console.log(mostBlogs(blogs))
-console.log(mostBlogs([]))
+//console.log(mostBlogs(blogs))
+//console.log(mostBlogs([]))
+
+console.log(mostLikes(blogs))
