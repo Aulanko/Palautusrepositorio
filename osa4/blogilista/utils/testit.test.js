@@ -2,15 +2,8 @@ const { test, describe } = require('node:test')
 const assert = require('node:assert')
 const listHelper = require('./list_helper')
 
-test('dummy returns one', () => {
-  const blogs = []
 
-  const result = listHelper.dummy(blogs)
-  assert.strictEqual(result, 1)
-})
-
-describe('total_likes', () =>{
-  const blogi = [
+const blogi = [
     {
         _id: "5a422a851b54a676234d17f7",
         title: "React patterns",
@@ -19,7 +12,8 @@ describe('total_likes', () =>{
         likes: 7
     }
   ]
-  const blogs = [
+
+const blogs = [
   {
     _id: "5a422a851b54a676234d17f7",
     title: "React patterns",
@@ -70,6 +64,16 @@ describe('total_likes', () =>{
   }  
 ]
 
+test('dummy returns one', () => {
+  
+
+  const result = listHelper.dummy(blogs)
+  assert.strictEqual(result, 1)
+})
+
+describe('total_likes', () =>{
+  
+
   test('all likes from the test blog lists combined equal, to one calculated', ()=>{
     const vast = listHelper.totalLikes(blogs)
     console.log(vast)
@@ -90,3 +94,21 @@ describe('total_likes', () =>{
     assert.strictEqual(vast, 27)
   })
 })
+
+describe('Getting the maximum likes object', () =>{
+  test('works with only 1 item', ()=>{
+     const vast = listHelper.favoriteBlog(blogi)
+     assert.deepStrictEqual(vast, blogi[0])
+  })
+
+  test('works with multiple items in a object list', () =>{
+    const vast = listHelper.favoriteBlog(blogs)
+    assert.deepStrictEqual(vast, blogs[2])
+  })
+
+  test('gives undefined with an empty list', ()=>{
+    const vast = listHelper.favoriteBlog([])
+    assert.deepStrictEqual(vast, undefined)
+  })
+})
+
