@@ -51,6 +51,12 @@ describe('tietokannasta hakemistestejä', ()=>{
         assert.strictEqual(initialBlogs.length, res.body.length)
     })
 
+    test('The field, which identifyes the blogs must be named id', async() =>{
+        const res = await api.get('/api/blogs')
+        assert.ok('id' in res.body[0])
+        assert.ok(!('_id' in res.body[0]))
+    })
+
     after(async () =>{
         await mongoose.connection.close()
     })
