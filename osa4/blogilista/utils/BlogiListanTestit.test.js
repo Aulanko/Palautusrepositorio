@@ -57,6 +57,27 @@ describe('tietokannasta hakemistestejä', ()=>{
         assert.ok(!('_id' in res.body[0]))
     })
 
+    test('You can add blogs to the app by using http POST request to /api/blogs', async() =>{
+        newObject = {
+            "title": "Koiran juoksu",
+            "author": "Koira",
+            "url": "http://koira.fi",
+            "likes": 29
+        }
+        await api.post('/api/blogs')
+        .send(newObject)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+
+
+        res = await api.get('/api/blogs')
+        assert.strictEqual(initialBlogs.length+1, res.body.length)
+
+        const otsikot = res.body.map(b => b.title)
+        
+        assert.ok(otsikot.includes("Koiran juoksu"))
+    })
+
     after(async () =>{
         await mongoose.connection.close()
     })
