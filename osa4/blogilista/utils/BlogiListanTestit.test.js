@@ -74,9 +74,28 @@ describe('tietokannasta hakemistestejä', ()=>{
         assert.strictEqual(initialBlogs.length+1, res.body.length)
 
         const otsikot = res.body.map(b => b.title)
-        
+
         assert.ok(otsikot.includes("Koiran juoksu"))
     })
+
+    test('If no value in the field likes, its default value will be set to 0', async()=>{
+         newObject = {
+            "title": "Koiran juoksu",
+            "author": "Koira",
+            "url": "http://koira.fi",
+            "likes": ""
+            
+        }
+        await api.post('/api/blogs')
+        .send(newObject)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+
+        res = await api.get('/api/blogs')
+        lisättyBlogi = res.body.find(b => b.title ==="Koiran juoksu")
+        assert.strictEqual(0, lisättyBlogi.likes)
+
+    } )
 
     after(async () =>{
         await mongoose.connection.close()
