@@ -37,6 +37,23 @@ app.post('/api/blogs', (request, response) => {
   })
 })
 
+app.delete('/api/blogs/:id', async(request, response)=>{
+  try{
+    const id = request.params.id
+    result = await Blog.findByIdAndDelete(id)
+    if(result){
+      response.status(204).end()
+    }else{
+      response.status(404).json({error: "The blog could not be found"})
+    }
+
+  }catch(error){
+    console.log("Error deleting a blog;", error)
+  }
+  
+
+})
+
 if(process.env.NODE_ENV !=='test'){
 
   const PORT = 3003

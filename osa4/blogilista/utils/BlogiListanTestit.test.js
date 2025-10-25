@@ -110,6 +110,23 @@ describe('tietokannasta hakemistestejä', ()=>{
 
     })
 
+    test('Testing deleting an object from the blogs', async() =>{
+        const blogitAlussa = await api.get('/api/blogs')
+        const blogToDelete = blogitAlussa.body[1]
+
+        await api.delete(`/api/blogs/${blogToDelete.id}`)
+        .expect(204)
+        
+
+        const res = await api.get('/api/blogs')
+            .expect(200)
+            .expect('Content-Type', /application\/json/)
+
+        assert.strictEqual(res.body.length, 1)
+        const poistettuBlogi = res.body.find(b => b.title ==="Kissan seisonta")
+        assert.strictEqual(poistettuBlogi, undefined)
+    })
+
     after(async () =>{
         await mongoose.connection.close()
     })
