@@ -127,6 +127,28 @@ describe('tietokannasta hakemistestejä', ()=>{
         assert.strictEqual(poistettuBlogi, undefined)
     })
 
+    test('Testing editing a blog', async()=>{
+        const blogitAlussa = await api.get('/api/blogs')
+        const blogiToUpdate = blogitAlussa.body[0]
+
+        const updatedObj =  {
+        "title": "Hepan juoksu",
+        "author": "Heppa",
+        "url": "http://koira.fi",
+        "likes": 990,
+        
+    }
+
+        await api.put(`/api/blogs/${blogiToUpdate.id}`)
+        .send(updatedObj)
+        .expect(200)
+
+        const res = await api.get('/api/blogs')
+
+        assert.strictEqual(990, res.body[0].likes)
+
+    })
+
     after(async () =>{
         await mongoose.connection.close()
     })

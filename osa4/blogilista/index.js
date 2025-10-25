@@ -54,6 +54,31 @@ app.delete('/api/blogs/:id', async(request, response)=>{
 
 })
 
+app.put('/api/blogs/:id', async(request, response)=>{
+ 
+
+  try{
+    if(!request.body.likes){
+    request.body.likes = 0
+  }
+    if(!("url" in request.body)||!("title" in request.body)){
+      return response.status(400).send({error:"Bad request"})
+    }
+
+    const id = request.params.id
+    const result = await Blog.findByIdAndUpdate(id, request.body, {new:true})
+    if(result){
+      response.status(200).json(result)
+    }else{
+      response.status(404).json({error:"Blog to edit not found"})
+    }
+
+  }catch(error){
+    console.log("Error editing a blog", error)
+  }
+})
+
+
 if(process.env.NODE_ENV !=='test'){
 
   const PORT = 3003
