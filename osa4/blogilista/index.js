@@ -27,6 +27,9 @@ app.post('/api/blogs', (request, response) => {
   if(!request.body.likes){
     request.body.likes = 0
   }
+  if(!("url" in request.body)||!("title" in request.body)){
+    return response.status(400).send({error:"Bad request"})
+  }
   const blog = new Blog(request.body)
 
   blog.save().then((result) => {

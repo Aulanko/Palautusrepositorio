@@ -58,7 +58,7 @@ describe('tietokannasta hakemistestejä', ()=>{
     })
 
     test('You can add blogs to the app by using http POST request to /api/blogs', async() =>{
-        newObject = {
+        const newObject = {
             "title": "Koiran juoksu",
             "author": "Koira",
             "url": "http://koira.fi",
@@ -79,7 +79,7 @@ describe('tietokannasta hakemistestejä', ()=>{
     })
 
     test('If no value in the field likes, its default value will be set to 0', async()=>{
-         newObject = {
+        const newObject = {
             "title": "Koiran juoksu",
             "author": "Koira",
             "url": "http://koira.fi",
@@ -96,6 +96,19 @@ describe('tietokannasta hakemistestejä', ()=>{
         assert.strictEqual(0, lisättyBlogi.likes)
 
     } )
+
+    test('if the new to be added blog, does not contain title field or url field, it will be met with status 400 Bad Request', async() =>{
+        const newObject = {
+            
+            "author": "Koira",
+            
+            "likes": 32   
+        }
+        await api.post('/api/blogs')
+        .send(newObject)
+        .expect(400)
+
+    })
 
     after(async () =>{
         await mongoose.connection.close()
