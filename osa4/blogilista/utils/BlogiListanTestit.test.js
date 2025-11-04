@@ -70,7 +70,7 @@ describe('tietokannasta hakemistestejä', ()=>{
         .expect('Content-Type', /application\/json/)
 
 
-        res = await api.get('/api/blogs')
+        const res = await api.get('/api/blogs')
         assert.strictEqual(initialBlogs.length+1, res.body.length)
 
         const otsikot = res.body.map(b => b.title)
