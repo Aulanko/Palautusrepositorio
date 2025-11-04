@@ -1,17 +1,14 @@
 
 const express = require('express')
-
-
+const { connectToDatabase } = require('./utils/db')
 const Blog = require('./models/blogs')
+const usersRouter = require('./controllers/users')
 
 const app = express()
 
 
-
-//const mongoUrl = 'mongodb://localhost/bloglist'
-
-
 app.use(express.json())
+app.use('/api/users', usersRouter)
 
 app.get('/', (request, response)=>{
     response.send('Blog is running now')
@@ -80,11 +77,13 @@ app.put('/api/blogs/:id', async(request, response)=>{
 
 
 if(process.env.NODE_ENV !=='test'){
-
   const PORT = 3003
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
-})
+  
+  connectToDatabase().then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`)
+    })
+  })
 }
 
 
