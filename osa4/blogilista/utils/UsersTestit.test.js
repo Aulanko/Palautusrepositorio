@@ -67,6 +67,24 @@ describe('when there is initially one user at db', () => {
     
   })
 
+  test('Fails to create a user if username is less than 3 chars', async()=>{
+    const usersAtStart = await usersInDb() 
+
+    const newUser = {
+      username: 'le',
+      name: 'OKaoo',
+      password: 'sa123',
+    }
+
+    await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(400)
+    
+    const usersAtEnd = await usersInDb() 
+    assert.strictEqual(usersAtEnd.length, 1)
+  })
+
   test('Gives out a proper statuscode, when trying to send with invalid Password given', async()=>{
     const usersAtStart = await usersInDb() 
 
