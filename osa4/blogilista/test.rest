@@ -4,10 +4,10 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Hepan juoksu",
+  "title": "Juokse sinä humma",
   "author": "Heppa",
   "url": "http://koira.fi",
-  "likes": 42
+  "likes": 422
 }
 
 
