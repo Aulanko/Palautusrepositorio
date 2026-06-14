@@ -6,7 +6,7 @@ sequenceDiagram
     participant server
 
     user->>browser: Types something to the text input field
-    user ->>browser: clicks the "Save" button
+    user->>browser: clicks the "Save" button
    
     
     browser->>server: POST request the data in JSON format to the server. 
@@ -43,10 +43,6 @@ sequenceDiagram
     server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
     deactivate server    
 
-<<<<<<< HEAD
-    Note right of browser: The browser executes the callback function that renders the notes saved
-=======
+
     Note right of browser: The browser executes the callback function that renders the notes saved
 
-
->>>>>>> dd2794b29c89804320379a591782855bb106ff5f
