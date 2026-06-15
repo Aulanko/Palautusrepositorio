@@ -5,6 +5,7 @@ const Blog = require('./models/blogs')
 const User = require('./models/usersModel')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
+const middleware = require('./utils/middleware') 
 const app = express()
 const jwt = require('jsonwebtoken')
 
@@ -12,14 +13,9 @@ const jwt = require('jsonwebtoken')
 app.use(express.json())
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
+app.use(middleware.tokenExtractor)
 
-const getTokenFrom = request => {
-  const authorization = request.get('authorization')
-  if (authorization && authorization.startsWith('Bearer ')) {
-    return authorization.replace('Bearer ', '')
-  }
-  return null
-}
+
 
 app.get('/', (request, response)=>{
     response.send('Blog is running now')
@@ -41,7 +37,7 @@ app.post('/api/blogs', async(request, response) => {
   if(!("url" in request.body)||!("title" in request.body)){
     return response.status(400).send({error:"Bad request"})
   }
-  const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
   if (!decodedToken.id) {
     return response.status(401).json({ error: 'token invalid' })
   }
