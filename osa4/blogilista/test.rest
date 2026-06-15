@@ -36,8 +36,13 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlcHBhbmEiLCJpZCI6IjZhMmY5MTMxMjcxMzQ2OGZlNjMwNjliNCIsImlhdCI6MTc4MTUxMDg0MH0.Xw95JXZmK6Iupkm1HS2xESouiim7ah0Vb1YVj6cftoY
 
 {
-  "title": "Tallilla",
+  "title": "Tallillar",
   "author": "Heppana",
   "url": "http://koira.fi",
   "likes": 5
 }
+
+DELETE http://localhost:3003/api/blogs/6a2fbb40e8150d20cb765349
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlcHBhbmEiLCJpZCI6IjZhMmY5MTMxMjcxMzQ2OGZlNjMwNjliNCIsImlhdCI6MTc4MTUxMDg0MH0.Xw95JXZmK6Iupkm1HS2xESouiim7ah0Vb1YVj6cftoY
+

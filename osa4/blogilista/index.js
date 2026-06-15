@@ -59,6 +59,21 @@ app.post('/api/blogs', async(request, response) => {
 
 app.delete('/api/blogs/:id', async(request, response)=>{
   try{
+
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    if (!decodedToken.id) {
+      return response.status(401).json({ error: 'token invalid' })
+    }
+
+    const blog = await Blog.findById(request.params.id)
+    if (!blog) {
+      return response.status(404).json({ error: 'blog not found' })
+    }
+
+   
+    if (blog.user.toString() !== decodedToken.id.toString()) {
+      return response.status(403).json({ error: 'only the creator can delete this blog' })
+    }
     const id = request.params.id
     result = await Blog.findByIdAndDelete(id)
     if(result){
@@ -67,9 +82,15 @@ app.delete('/api/blogs/:id', async(request, response)=>{
       response.status(404).json({error: "The blog could not be found"})
     }
 
-  }catch(error){
-    console.log("Error deleting a blog;", error)
+    
+
+  } catch (error) {
+  console.log(error.name, error.message)  
+  if (error.name === 'JsonWebTokenError') {
+    return response.status(401).json({ error: 'token invalid' })
   }
+  response.status(500).json({ error: error.message })
+}
   
 
 })
