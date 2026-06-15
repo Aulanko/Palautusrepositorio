@@ -4,12 +4,13 @@ const { connectToDatabase } = require('./utils/db')
 const Blog = require('./models/blogs')
 const User = require('./models/usersModel')
 const usersRouter = require('./controllers/users')
-
+const loginRouter = require('./controllers/login')
 const app = express()
 
 
 app.use(express.json())
 app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
 
 app.get('/', (request, response)=>{
     response.send('Blog is running now')
