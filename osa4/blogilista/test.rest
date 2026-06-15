@@ -4,10 +4,10 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Juokse sinä humma",
-  "author": "Heppa",
+  "title": "Juokse sinä humma kissa",
+  "author": "Heppana",
   "url": "http://koira.fi",
-  "likes": 422
+  "likes": 2422
 }
 
 
@@ -15,7 +15,7 @@ POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-  "name": "Lekka",
-  "username":"eewee",
-  "password": "1237"
+  "name": "Kissa",
+  "username":"Heppana",
+  "password": "Hevastaa11"
 }

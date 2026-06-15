@@ -31,12 +31,19 @@ app.post('/api/blogs', async(request, response) => {
   if(!("url" in request.body)||!("title" in request.body)){
     return response.status(400).send({error:"Bad request"})
   }
-  const usera = await User.findOne({})
-  const blog = new Blog({...request.body, user:usera})
 
-  blog.save().then((result) => {
-    response.status(201).json(result)
-  })
+  const usera = await User.findOne({})
+  const blog = new Blog({...request.body, user:usera._id})
+  const savedBlog = await blog.save()
+
+  
+  await User.findByIdAndUpdate(usera._id, {
+      $push: { blogs: savedBlog._id }
+    })
+  
+  
+  response.status(201).json(savedBlog)
+  
 })
 
 app.delete('/api/blogs/:id', async(request, response)=>{
