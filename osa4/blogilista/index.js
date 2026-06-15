@@ -6,11 +6,20 @@ const User = require('./models/usersModel')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const app = express()
+const jwt = require('jsonwebtoken')
 
 
 app.use(express.json())
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
+
+const getTokenFrom = request => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.startsWith('Bearer ')) {
+    return authorization.replace('Bearer ', '')
+  }
+  return null
+}
 
 app.get('/', (request, response)=>{
     response.send('Blog is running now')
@@ -32,13 +41,18 @@ app.post('/api/blogs', async(request, response) => {
   if(!("url" in request.body)||!("title" in request.body)){
     return response.status(400).send({error:"Bad request"})
   }
+  const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: 'token invalid' })
+  }
+  const user = await User.findById(decodedToken.id)
 
-  const usera = await User.findOne({})
-  const blog = new Blog({...request.body, user:usera._id})
+  //const usera = await User.findOne({})
+  const blog = new Blog({...request.body, user:user._id})
   const savedBlog = await blog.save()
 
   
-  await User.findByIdAndUpdate(usera._id, {
+  await User.findByIdAndUpdate(user._id, {
       $push: { blogs: savedBlog._id }
     })
   

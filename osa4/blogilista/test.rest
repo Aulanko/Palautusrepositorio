@@ -29,3 +29,15 @@ Content-Type: application/json
   "username": "Heppana",
   "password": "Hevastaa11"
 }
+
+
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlcHBhbmEiLCJpZCI6IjZhMmY5MTMxMjcxMzQ2OGZlNjMwNjliNCIsImlhdCI6MTc4MTUwODQxNH0.oyvYsPBLjgsbSbMlfiXrRBBR57uuAHQUDETG3Y8poqU
+
+{
+  "title": "My new blog",
+  "author": "Heppana",
+  "url": "http://koira.fi",
+  "likes": 5
+}
